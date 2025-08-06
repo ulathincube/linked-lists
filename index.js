@@ -58,7 +58,7 @@ function createLinkedList() {
 
   const head = () => {
     if (!headNode) return null;
-    return headNode.value;
+    return headNode;
   };
 
   const tail = () => {
@@ -102,26 +102,64 @@ function createLinkedList() {
     previousNode.next = currentNode;
   };
 
-  const containsValue = value => {};
+  const containsValue = value => {
+    if (!headNode) return null;
 
-  const find = value => {};
+    let currentNode = headNode;
 
-  const toString = () => {
-    return headNode;
+    while (currentNode.next) {
+      if (currentNode.value === value) {
+        return true;
+      }
+      currentNode = currentNode.next;
+    }
+
+    return false;
   };
 
-  return { append, prepend, toString, size, head, tail, at, pop };
+  const find = value => {
+    if (!headNode) return null;
+
+    let currentNode = headNode;
+    let index = 0;
+
+    while (currentNode) {
+      if (currentNode.value === value) {
+        return index;
+      }
+
+      currentNode = currentNode.next;
+      if (!currentNode) return null;
+      index++;
+    }
+  };
+
+  const toString = () => {
+    if (!headNode) return null;
+    let currentNode = headNode;
+    let values = [];
+
+    while (currentNode) {
+      values.push(`( ${currentNode.value} )`);
+      currentNode = currentNode.next;
+      if (!currentNode) values.push('null');
+    }
+
+    const string = values.join(' -> ');
+
+    return string;
+  };
+
+  return {
+    append,
+    prepend,
+    toString,
+    size,
+    head,
+    tail,
+    at,
+    pop,
+    containsValue,
+    find,
+  };
 }
-
-const list = createLinkedList();
-
-list.append('google.com');
-list.append('facebook.com');
-list.prepend('whatsapp.com');
-console.log(list.toString());
-list.pop();
-console.log(list.toString());
-// console.log(list.size());
-
-// console.log(list.head());
-// console.log(list.tail());
