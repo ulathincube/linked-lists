@@ -1,15 +1,16 @@
-function createNode(value = null, nextNode = null) {
-  return { value, nextNode };
+function createNode(value = null, next = null) {
+  return { value, next };
 }
 
 function createLinkedList() {
-  const headNode = {};
+  let headNode = null;
 
   const append = value => {
     const newNode = createNode(value);
 
-    if (!headNode.value) {
-      headNode.value = newNode;
+    if (!headNode) {
+      headNode = newNode;
+      return;
     } else {
       let currentNode = headNode;
 
@@ -24,20 +25,36 @@ function createLinkedList() {
   const prepend = value => {
     const newNode = createNode(value);
 
-    if (!headNode.value) {
-      headNode.value = newNode;
+    // create a new node
+    // if no head. make this node the head.
+    // if there is a head,
+    // let current = head;
+    // while(current.next) current = current.next
+    //
+
+    if (!headNode) {
+      headNode = newNode;
+      return;
     } else {
-      let currentNode = headNode;
-
-      while (currentNode.next) {
-        currentNode = currentNode.next;
-      }
-
-      currentNode.next = newNode;
+      const oldNodes = headNode;
+      headNode = newNode;
+      headNode.next = oldNodes;
     }
   };
 
-  const size = () => {};
+  const size = () => {
+    if (!headNode) {
+      return 0;
+    }
+    let currentNode = headNode;
+    let count = 1;
+
+    while (currentNode.next) {
+      count++;
+      currentNode = currentNode.next;
+    }
+    return count;
+  };
 
   const head = () => {};
 
@@ -51,11 +68,17 @@ function createLinkedList() {
 
   const find = value => {};
 
-  const toString = () => {};
+  const toString = () => {
+    return headNode;
+  };
 
-  return { append, prepend };
+  return { append, prepend, toString, size };
 }
 
 const list = createLinkedList();
 
-console.log(list.append('house'));
+list.append('google.com');
+list.append('facebook.com');
+list.prepend('whatsapp.com');
+console.log(list.toString());
+console.log(list.size());
