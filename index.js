@@ -56,15 +56,53 @@ function createLinkedList() {
     return count;
   };
 
-  const head = () => {};
+  const head = () => {
+    if (!headNode) return null;
+    return headNode.value;
+  };
 
-  const tail = () => {};
+  const tail = () => {
+    if (!headNode) return null;
 
-  const at = index => {};
+    let currentNode = headNode;
 
-  const pop = () => {};
+    while (currentNode.next) {
+      currentNode = currentNode.next;
+    }
 
-  const containsValue = () => {};
+    return currentNode;
+  };
+
+  const at = index => {
+    let currentNode = headNode;
+    let countIndex = 0;
+
+    while (currentNode.next) {
+      if (countIndex === index) {
+        return currentNode;
+      }
+
+      countIndex++;
+      currentNode = currentNode.next;
+    }
+  };
+
+  const pop = () => {
+    if (!headNode) return null;
+
+    let currentNode = headNode;
+    let previousNode;
+
+    while (currentNode.next) {
+      previousNode = currentNode;
+      currentNode = currentNode.next;
+    }
+
+    currentNode = null;
+    previousNode.next = currentNode;
+  };
+
+  const containsValue = value => {};
 
   const find = value => {};
 
@@ -72,7 +110,7 @@ function createLinkedList() {
     return headNode;
   };
 
-  return { append, prepend, toString, size };
+  return { append, prepend, toString, size, head, tail, at, pop };
 }
 
 const list = createLinkedList();
@@ -81,4 +119,9 @@ list.append('google.com');
 list.append('facebook.com');
 list.prepend('whatsapp.com');
 console.log(list.toString());
-console.log(list.size());
+list.pop();
+console.log(list.toString());
+// console.log(list.size());
+
+// console.log(list.head());
+// console.log(list.tail());
